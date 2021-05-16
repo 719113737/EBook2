@@ -4,13 +4,16 @@ import com.example.demo.entity.UserInfo;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 /**
  * token工具类
  */
+@Component
 public class JwtUtils {
 
     @Value("${simplecrud.app.jwtSecret}")
@@ -27,7 +30,7 @@ public class JwtUtils {
                 .setSubject((userInfo.getUsername()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(SignatureAlgorithm.ES256,jwtSecret)
+                .signWith(SignatureAlgorithm.HS256,jwtSecret)
                 .compact();
     }
 
