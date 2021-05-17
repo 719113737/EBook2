@@ -21,7 +21,7 @@ public class BookController {
      * 获得书列表
      * @return
      */
-    @RequestMapping(path = "get/books/",method = RequestMethod.GET)
+    @RequestMapping(path = "/books",method = RequestMethod.GET)
     public Map getBookes() {
         List<Book>books =  bookService.findAllBooks();
         Map<String,Object> result = new HashMap<>();
@@ -37,7 +37,7 @@ public class BookController {
      * @param title
      * @return
      */
-    @RequestMapping(path = "get/books/{title}",method = RequestMethod.GET)
+    @RequestMapping(path = "/books/{title}",method = RequestMethod.GET)
     public Map getBookByTitle(@PathVariable("title")String title) {
         Book book = bookService.getBookByTitle(title);
         Map <String,Object> map = new HashMap<>();

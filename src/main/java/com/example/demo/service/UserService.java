@@ -8,6 +8,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -61,7 +63,8 @@ public class UserService implements UserDetailsService {
      */
     public boolean registerUser(String username, String password, String phone){
         try {
-            UserInfo userInfo = new UserInfo(username,password, phone,"USER",
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            UserInfo userInfo = new UserInfo(username,passwordEncoder.encode(password), phone,"USER",
                     true,true,true,true);
             userInfo_mapper.insertUser(userInfo);
             return true;
