@@ -27,7 +27,7 @@ public class UserController {
      * @param map
      * @return
      */
-    @RequestMapping(path = "/register",method = RequestMethod.POST)
+    @RequestMapping(path = "/registerAction",method = RequestMethod.POST)
     public Map register(@RequestBody Map map) {
         userService.registerUser((String)map.get("username"),(String)map.get("password"),(String)map.get("phone"));
         Map <String,Object> result = new HashMap<>();

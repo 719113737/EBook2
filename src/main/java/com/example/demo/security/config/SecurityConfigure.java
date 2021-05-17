@@ -43,7 +43,7 @@ import java.util.Map;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true) //启用方法级别的权限认证
-public class SecurityCofigure extends WebSecurityConfigurerAdapter{
+public class SecurityConfigure extends WebSecurityConfigurerAdapter{
 
 //    @Bean
 //    public static BCryptPasswordEncoder passwordEncoder(){
@@ -127,7 +127,7 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter{
 //                            "/img/**",
 //                            "webjars/**",
 //                            "swagger-ui/**").permitAll()
-//                    .anyRequest().authenticated()
+//                    .anyRequest().authenticated();
 //                    .and()
 //                    .formLogin()
 //                    .loginPage("/login")
@@ -200,7 +200,11 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter{
                             "/img/**",
                             "webjars/**",
                             "swagger-ui/**",
-                            "/register"
+                            "/registerAction",
+                            "/pdfjs/**",
+                            "/index.html",
+                            "/book1.jpg",
+                            "/**"
                         ).permitAll()
                 .anyRequest().authenticated()
                 .and()
