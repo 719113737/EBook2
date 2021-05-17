@@ -69,7 +69,7 @@ public class BookController {
      * @param title
      * @return
      */
-    @RequestMapping(path = "/user/{username}//collections//<title>",method = RequestMethod.GET)
+    @RequestMapping(path = "/user/{username}/collections/{title}",method = RequestMethod.GET)
     public Map getCollection(@PathVariable("username") String username,@PathVariable("title")String title){
         Map<String,Object> result =new HashMap();
         boolean isCollection = bookService.isCollect(username,title);

@@ -204,6 +204,8 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter{
                             "/pdfjs/**",
                             "/index.html",
                             "/book1.jpg",
+                            "/registerAction",
+                            "/books/**",
                             "/"
                         ).permitAll()
                 .anyRequest().authenticated()
