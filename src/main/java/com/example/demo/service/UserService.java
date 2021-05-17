@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.mapper.UserInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +19,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserInfoMapper userInfo_mapper;
 
+
+    private AuthenticationManager authenticationManager;
     /**
      *
      * @param username 用户名
@@ -29,6 +33,7 @@ public class UserService implements UserDetailsService {
         String password = userInfo_mapper.findPasswordByUsername(username);
         String role = userInfo_mapper.findRoleByUsername(username);
         String phone = userInfo_mapper.findPhoneByUsername(username);
+        //System.out.println("----------------------test---------------------------");
 
         if(password != null)return new UserInfo(username,password, phone,
                 role,true,true,true,true);
@@ -63,6 +68,6 @@ public class UserService implements UserDetailsService {
         } catch (Exception e){
             return false;
         }
-
     }
+
 }

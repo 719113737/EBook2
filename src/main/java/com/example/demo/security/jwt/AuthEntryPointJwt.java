@@ -2,6 +2,7 @@ package com.example.demo.security.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import java.io.IOException;
 /**
  * 好像是写token检验失败逻辑，现在不知道用在哪
  */
+@Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint{
 
 

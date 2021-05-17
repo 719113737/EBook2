@@ -3,6 +3,7 @@ package com.example.demo.security.jwt;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -42,8 +43,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                 authenticationToken .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-
+                System.out.println("token验证成功");
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                //Thread.sleep(5000);
             }
 
         } catch (Exception e){
