@@ -1,21 +1,15 @@
 package com.example.demo.security.config;
 
 import com.example.demo.entity.UserInfo;
-import com.example.demo.security.MyAccessDecisionManager;
-import com.example.demo.security.MyAuthenticationProvider;
-import com.example.demo.security.MyInvocationSecurityMetadataSourceService;
 import com.example.demo.security.jwt.AuthEntryPointJwt;
 import com.example.demo.security.jwt.AuthTokenFilter;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,7 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -119,7 +112,6 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter{
 //
 //        @Override
 //        protected void configure(HttpSecurity http) throws Exception {
-//            //todo 添加无需通过验证的路由
 //            http
 //                    .authorizeRequests()
 //                    .antMatchers("/js/**",
@@ -199,13 +191,16 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter{
                             "/css/**",
                             "/img/**",
                             "webjars/**",
-                            "swagger-ui/**",
+                            "/swagger-ui/**",
+                            "/api/**",
                             "/registerAction",
                             "/pdfjs/**",
                             "/index.html",
                             "/book1.jpg",
                             "/registerAction",
                             "/books/**",
+                            "/favicon.ico",
+                            "/v3/api-docs/**",
                             "/"
                         ).permitAll()
                 .anyRequest().authenticated()

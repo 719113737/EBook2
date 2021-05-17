@@ -6,6 +6,8 @@ import com.example.demo.entity.Collection;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.service.BookService;
 import com.example.demo.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Tag(name = "用户个人模块")
 public class UserController {
 
     @Autowired
@@ -27,6 +30,7 @@ public class UserController {
      * @param map
      * @return
      */
+    @Operation(description = "注册")
     @RequestMapping(path = "/registerAction",method = RequestMethod.POST)
     public Map register(@RequestBody Map map) {
         userService.registerUser((String)map.get("username"),(String)map.get("password"),(String)map.get("phone"));
@@ -41,6 +45,7 @@ public class UserController {
      * @param username
      * @return
      */
+    @Operation(description = "个人信息")
     @RequestMapping(path = "/user/{username}",method = RequestMethod.GET)
     public Map getInfoByUsername(@PathVariable("username")String username){
         Map<String,Object> result =new HashMap();
