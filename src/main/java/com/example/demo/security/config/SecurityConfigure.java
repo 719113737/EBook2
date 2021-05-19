@@ -248,6 +248,8 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter{
         authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
+
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
