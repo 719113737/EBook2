@@ -31,11 +31,11 @@ public class UserController {
      * @return
      */
     @Operation(description = "注册")
-    @RequestMapping(path = "/registerAction",method = RequestMethod.POST)
+    @RequestMapping(path = "/register",method = RequestMethod.POST)
     public Map register(@RequestBody Map map) {
         userService.registerUser((String)map.get("username"),(String)map.get("password"),(String)map.get("phone"));
         Map <String,Object> result = new HashMap<>();
-        result.put("msg","");
+        result.put("msg","success");
         result.put("code",200);
         return result;
     }

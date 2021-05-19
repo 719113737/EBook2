@@ -17,8 +17,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -180,6 +182,7 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.headers().frameOptions().disable();
         http
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(authEntryPointJwt)
@@ -190,14 +193,11 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter{
                 .antMatchers("/js/**",
                             "/css/**",
                             "/img/**",
-                            "webjars/**",
-                            "/swagger-ui/**",
-                            "/api/**",
-                            "/registerAction",
+                            "/pdf/**",
                             "/pdfjs/**",
-                            "/index.html",
-                            "/book1.jpg",
-                            "/registerAction",
+                            "/fonts/**",
+                            "/register",
+                            "/login",
                             "/books/**",
                             "/favicon.ico",
                             "/v3/api-docs/**",
@@ -214,14 +214,28 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter{
                         Map<String,Object> map = new HashMap<>();
                         map.put("status",200);
                         map.put("token",jwtUtils.generateJwtToken(authentication));
-                        map.put("msg","");
+                        map.put("msg","success");
                         UserInfo userInfo = (UserInfo)authentication.getPrincipal();
                         map.put("data",userInfo.getUsername());
                         out.write(new ObjectMapper().writeValueAsString(map));
                         out.flush();
                         out.close();
                     }
-                }).permitAll();
+                })
+                .failureHandler(new AuthenticationFailureHandler() {
+                    @Override
+                    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+                        httpServletResponse.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = httpServletResponse.getWriter();
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("status",404);
+                        map.put("msg","failure");
+                        out.write(new ObjectMapper().writeValueAsString(map));
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .permitAll();
 
         http
                 .addFilterBefore(authTokenFilter(),UsernamePasswordAuthenticationFilter.class);
