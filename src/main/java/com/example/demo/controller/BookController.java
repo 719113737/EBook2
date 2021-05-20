@@ -58,7 +58,7 @@ public class BookController {
      * @return
      */
     @Operation(description = "获得个人收藏信息")
-    @RequestMapping(path = "/user/{username}//collections",method = RequestMethod.GET)
+    @RequestMapping(path = "/user/{username}/collections",method = RequestMethod.GET)
     public Map getCollectionByUsername(@PathVariable("username") String username){
         Map<String,Object> result =new HashMap();
         List<CollectionInfo> collections = bookService.getCollectionByUsername(username);
