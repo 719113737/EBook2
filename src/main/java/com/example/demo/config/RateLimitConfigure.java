@@ -21,10 +21,10 @@ public class RateLimitConfigure implements WebMvcConfigurer {
         Bucket bucket = Bucket4j.builder().addLimit(limit).build();
         registry.addInterceptor(new RateLimitInterceptor(bucket, 1)).addPathPatterns("/user/**");
 
-        refill = Refill.intervally(3, Duration.ofMinutes(1));
-        limit = Bandwidth.classic(3, refill);
-        bucket = Bucket4j.builder().addLimit(limit).build();
-        registry.addInterceptor(new RateLimitInterceptor(bucket, 1)).addPathPatterns("/place/**");
+//        refill = Refill.intervally(3, Duration.ofMinutes(1));
+//        limit = Bandwidth.classic(3, refill);
+//        bucket = Bucket4j.builder().addLimit(limit).build();
+//        registry.addInterceptor(new RateLimitInterceptor(bucket, 1)).addPathPatterns("/place/**");
 
     }
 }
