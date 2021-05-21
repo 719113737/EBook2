@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.TimeUnit;
 
 
-public class RatelimitInterceptor implements HandlerInterceptor {
+public class RateLimitInterceptor implements HandlerInterceptor {
 
     private final Bucket bucket;
 
     private final int tokenNum;
 
-    public RatelimitInterceptor(Bucket bucket,int tokenNum) {
+    public RateLimitInterceptor(Bucket bucket, int tokenNum) {
         this.bucket = bucket;
         this.tokenNum = tokenNum;
     }
@@ -25,7 +25,7 @@ public class RatelimitInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         ConsumptionProbe consumptionPro = this.bucket.tryConsumeAndReturnRemaining(this.tokenNum);
         if(consumptionPro.isConsumed()){
-            response.addHeader("X-Rate-Limit-Remaing",Long.toString(consumptionPro.getRemainingTokens()));
+            response.addHeader("X-Rate-Limit-Remaining",Long.toString(consumptionPro.getRemainingTokens()));
             return true;
         }
 
