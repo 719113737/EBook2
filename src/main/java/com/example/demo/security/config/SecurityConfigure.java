@@ -200,7 +200,6 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter{
                             "/login",
                             "/books/**",
                             "/favicon.ico",
-                            "/v3/api-docs/**",
                             "/"
                         ).permitAll()
                 .anyRequest().authenticated()
@@ -212,7 +211,7 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter{
                         httpServletResponse.setContentType("application/json;charset=utf-8");
                         PrintWriter out = httpServletResponse.getWriter();
                         Map<String,Object> map = new HashMap<>();
-                        map.put("status",200);
+                        map.put("code",200);
                         map.put("token",jwtUtils.generateJwtToken(authentication));
                         map.put("msg","success");
                         UserInfo userInfo = (UserInfo)authentication.getPrincipal();

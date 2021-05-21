@@ -57,6 +57,22 @@ public class UserController {
         return result;
     }
 
+    /**
+     * 修改个人信息
+     * @param username
+     * @return
+     */
+    @Operation(description = "个人信息")
+    @RequestMapping(path = "/user/{username}",method = RequestMethod.POST)
+    public Map modifyUserPhone(@PathVariable("username")String username, @RequestBody Map map){
+        Map<String,Object> result =new HashMap();
+        userService.changePhone(username, (String) map.get("phone"));
+        result.put("msg","");
+        result.put("code",200);
+
+        return result;
+    }
+
 
 
 }
