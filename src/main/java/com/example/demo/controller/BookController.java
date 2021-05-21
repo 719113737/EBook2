@@ -7,6 +7,7 @@ import com.example.demo.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -58,6 +59,7 @@ public class BookController {
      * @return
      */
     @Operation(description = "获得个人收藏信息")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{username}/collections",method = RequestMethod.GET)
     public Map getCollectionByUsername(@PathVariable("username") String username){
         Map<String,Object> result =new HashMap();
@@ -76,6 +78,7 @@ public class BookController {
      * @return
      */
     @Operation(description = "查看某书是否被收藏")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{username}/collections/{title}",method = RequestMethod.GET)
     public Map getCollection(@PathVariable("username") String username,@PathVariable("title")String title){
         Map<String,Object> result =new HashMap();
@@ -94,6 +97,7 @@ public class BookController {
      * @return
      */
     @Operation(description = "添加收藏")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{username}/collections/{title}",method = RequestMethod.POST)
     public Map addCollection(@PathVariable("username")String username,@PathVariable("title")String title) {
         bookService.setCollection(username,title);
@@ -105,6 +109,7 @@ public class BookController {
     }
 
     @Operation(description = "删除收藏")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{username}/collections/{title}",method = RequestMethod.DELETE)
     public Map deleteCollection(@PathVariable("username")String username,@PathVariable("title")String title) {
         bookService.deleteCollection(username,title);

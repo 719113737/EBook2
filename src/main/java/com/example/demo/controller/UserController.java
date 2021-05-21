@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,7 @@ public class UserController {
      * @return
      */
     @Operation(description = "个人信息")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{username}",method = RequestMethod.GET)
     public Map getInfoByUsername(@PathVariable("username")String username){
         Map<String,Object> result =new HashMap();
@@ -63,6 +65,7 @@ public class UserController {
      * @return
      */
     @Operation(description = "个人信息")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/user/{username}",method = RequestMethod.POST)
     public Map modifyUserPhone(@PathVariable("username")String username, @RequestBody Map map){
         Map<String,Object> result =new HashMap();
