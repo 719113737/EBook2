@@ -24,10 +24,16 @@ public class UserController {
     @Operation(description = "注册")
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     public Map register(@RequestBody Map map) {
-        userService.registerUser((String) map.get("username"), (String) map.get("password"), (String) map.get("phone"));
+        boolean success = userService.registerUser((String) map.get("username"), (String) map.get("password"), (String) map.get("phone"));
         Map<String, Object> result = new HashMap<>();
-        result.put("msg", "success");
-        result.put("code", 200);
+        if (success) {
+            result.put("msg", "success");
+            result.put("code", 200);
+        } else {
+            result.put("msg", "failed");
+            result.put("code", 404);
+        }
+
         return result;
     }
 
@@ -55,9 +61,14 @@ public class UserController {
     @RequestMapping(path = "/user/{username}", method = RequestMethod.POST)
     public Map modifyUserPhone(@PathVariable("username") String username, @RequestBody Map map) {
         Map<String, Object> result = new HashMap<>();
-        userService.changePhone(username, (String) map.get("phone"));
-        result.put("msg", "");
-        result.put("code", 200);
+        boolean success = userService.changePhone(username, (String) map.get("phone"));
+        if (success) {
+            result.put("msg", "success");
+            result.put("code", 200);
+        } else {
+            result.put("msg", "failed");
+            result.put("code", 404);
+        }
 
         return result;
     }
